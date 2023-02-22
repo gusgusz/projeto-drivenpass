@@ -4,6 +4,7 @@ import "express-async-errors";
 import cors from "cors";
 import dotenv from "dotenv";
 import userRouter from './routes/user.router.js'
+import credentialRouter from "./routes/credential.router.js";
 dotenv.config();
 
 
@@ -12,6 +13,7 @@ app
 .use(cors())
 .use(express.json())
 .use(userRouter)
+.use(credentialRouter)
 
 
 
