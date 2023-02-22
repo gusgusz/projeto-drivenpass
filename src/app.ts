@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import userRouter from './routes/user.router.js'
 import credentialRouter from "./routes/credential.router.js";
 import wifiRouter from "./routes/wifi.router.js";
+import { authenticateToken } from "./middleware/generateToken.js";
 dotenv.config();
 
 
@@ -14,6 +15,7 @@ app
 .use(cors())
 .use(express.json())
 .use(userRouter)
+.use(authenticateToken)
 .use(credentialRouter)
 .use(wifiRouter)
 

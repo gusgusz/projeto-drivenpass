@@ -1,8 +1,8 @@
 import { UserInput } from "../protocols.js";
 import bcrypt from "bcrypt";
 import userRepository from "../repositories/user.repository.js";
-import { generateAccessToken, authenticateToken } from "../middleware/generateToken.js";
-import { OK } from "http-status";
+import { generateAccessToken} from "../middleware/generateToken.js";
+
 
 async function signUp(body: UserInput){
 const {email, password} = body;
@@ -26,7 +26,7 @@ async function signIn(body: UserInput){
     throw new Error("unauthorized");
     }
    
-  
+    
     const token = generateAccessToken(email);
     console.log(token);
     return token;

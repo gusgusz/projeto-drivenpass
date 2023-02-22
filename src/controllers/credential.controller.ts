@@ -7,7 +7,7 @@ import httpStatus from "http-status";
 
 export async function createCredential(req: Request, res: Response, next: any){
     const body = req.body;
-    const userId = 1;
+    const userId = Number(req.body.userId)
     const validate = credentialSchemma.validate(body);
 
     if(validate.error){
@@ -28,7 +28,7 @@ export async function createCredential(req: Request, res: Response, next: any){
 }
 
 export async function getCredentials(req: Request, res: Response, next: any) {
-  const userId = 1;
+  const userId = Number(req.body.userId)
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }
@@ -47,7 +47,7 @@ export async function getCredentials(req: Request, res: Response, next: any) {
 
 export async function getCredentialById(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
-  const userId = 1;
+  const userId = Number(req.body.userId)
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }
@@ -69,7 +69,7 @@ export async function getCredentialById(req: Request, res: Response, next: any) 
 
 export async function deleteCredential(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
-  const userId = 1;
+  const userId = Number(req.body.userId)
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }
