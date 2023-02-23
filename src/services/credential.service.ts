@@ -1,6 +1,6 @@
-import { UserInput } from "../protocols.js";
+import { UserInput } from "../protocols";
 
-import credentialRepository from "../repositories/credential.repository.js";
+import credentialRepository from "../repositories/credential.repository";
 import dotenv from "dotenv";
 import Cryptr from "cryptr";
 dotenv.config();

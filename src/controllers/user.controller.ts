@@ -1,6 +1,6 @@
 import { json, Request, Response } from "express";
-import { userSchemma } from "../models/user.model.js";
-import userServices from "../services/user.service.js";
+import { userSchemma } from "../models/user.model";
+import userServices from "../services/user.service";
 import httpStatus from "http-status";
 
 
@@ -14,7 +14,7 @@ export async function signUp(req: Request, res: Response, next: any){
     }
     try{
     await userServices.signUp(body);
-    return res.sendStatus(httpStatus.OK);
+    return res.sendStatus(httpStatus.CREATED);
     }catch(err){
         if(err.message === "conflict"){ 
           return res.sendStatus(httpStatus.CONFLICT)

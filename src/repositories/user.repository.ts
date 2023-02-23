@@ -1,4 +1,4 @@
-import prisma from "../config/database.js";
+import prisma from "../config/database";
 import { UserInput } from "../protocols";
 
 async function signUp({email, hashPassword} : UserInput){

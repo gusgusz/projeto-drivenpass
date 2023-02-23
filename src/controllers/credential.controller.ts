@@ -1,6 +1,6 @@
-import { json, Request, Response } from "express";
-import { credentialSchemma } from "../models/credential.model.js";
-import credentialServices from "../services/credential.service.js";
+import {  Request, Response } from "express";
+import { credentialSchemma } from "../models/credential.model";
+import credentialServices from "../services/credential.service";
 import httpStatus from "http-status";
 
 

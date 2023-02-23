@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {createWifi, getWifis, getWifiById, deleteWifi} from "../controllers/wifi.controller.js"
+import {createWifi, getWifis, getWifiById, deleteWifi} from "../controllers/wifi.controller"
 
 const wifiRouter = Router();
 

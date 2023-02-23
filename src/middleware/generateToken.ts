@@ -1,14 +1,13 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { Response, Request } from "express";
-import userRepository from "../repositories/user.repository.js";
+import userRepository from "../repositories/user.repository";
 dotenv.config();
 
 export async function generateAccessToken(email: string) {
-  console.log("oi");
   const objEmail = { email };
     const token = jwt.sign(objEmail, process.env.TOKEN_SECRET, { expiresIn: '10000s' });
-    console.log(token);
+    
     return token;
   }
 

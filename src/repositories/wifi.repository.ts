@@ -1,6 +1,6 @@
 
-import prisma from "../config/database.js";
-import { WifiInsert } from "../protocols.js";
+import prisma from "../config/database";
+import { WifiInsert } from "../protocols";
 
 
 async function getWifiById(id: number){

@@ -1,6 +1,6 @@
-import { UserInput } from "../protocols.js";
+import { UserInput } from "../protocols";
 
-import wifiRepository from "../repositories/wifi.repository.js";
+import wifiRepository from "../repositories/wifi.repository";
 import dotenv from "dotenv";
 import Cryptr from "cryptr";
 dotenv.config();

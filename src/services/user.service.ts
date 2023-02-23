@@ -1,7 +1,7 @@
-import { UserInput } from "../protocols.js";
+import { UserInput } from "../protocols";
 import bcrypt from "bcrypt";
-import userRepository from "../repositories/user.repository.js";
-import { generateAccessToken} from "../middleware/generateToken.js";
+import userRepository from "../repositories/user.repository";
+import { generateAccessToken} from "../middleware/generateToken";
 
 
 async function signUp(body: UserInput){
@@ -27,8 +27,8 @@ async function signIn(body: UserInput){
     }
    
     
-    const token = generateAccessToken(email);
-    console.log(token);
+    const token =await generateAccessToken(email);
+  
     return token;
     
   }

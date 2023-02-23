@@ -1,5 +1,5 @@
-import prisma from "../config/database.js";
-import { CredentialInsert } from "../protocols.js";
+import prisma from "../config/database";
+import { CredentialInsert } from "../protocols";
 
 async function getCredentialByTitle(title: string){
   return await prisma.credential.findFirst({

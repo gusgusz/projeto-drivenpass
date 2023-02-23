@@ -1,6 +1,6 @@
-import { json, Request, Response } from "express";
-import { wifiSchemma } from "../models/wifi.model.js";
-import wifiServices from "../services/wifi.service.js";
+import {  Request, Response } from "express";
+import { wifiSchemma } from "../models/wifi.model";
+import wifiServices from "../services/wifi.service";
 import httpStatus from "http-status";
 
 
