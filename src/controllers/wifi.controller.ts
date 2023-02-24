@@ -31,12 +31,11 @@ export async function getWifis(req: Request, res: Response, next: any) {
    const wifis =  await wifiServices.getWifis(userId);
     return res.status(httpStatus.OK).json(wifis);
     }catch(err){
-        if(err.message === "not found"){
-          return res.sendStatus(httpStatus.NOT_FOUND);
-        }
-      
+      if(err.message === "not found"){
+        return res.sendStatus(httpStatus.NOT_FOUND);
+      }
 
-        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+        return res.sendStatus(err);
 
     }
 
@@ -50,12 +49,15 @@ export async function getWifiById(req: Request, res: Response, next: any) {
    const wifi =  await wifiServices.getWifiById(id, userId);
     return res.status(httpStatus.OK).json(wifi);
     }catch(err){
-        if(err.message === "not found"){
-          return res.sendStatus(httpStatus.NOT_FOUND);
-        }
-        if(err.message === "unauthorized"){
-          return res.sendStatus(httpStatus.UNAUTHORIZED);
-        }
+
+      if(err.message === "not found"){
+        return res.sendStatus(httpStatus.NOT_FOUND);
+      }
+
+      if(err.message === "unauthorized"){
+        return res.sendStatus(httpStatus.UNAUTHORIZED);
+      }
+     res.sendStatus(err);
 
      
     }
@@ -70,13 +72,11 @@ export async function deleteWifi(req: Request, res: Response, next: any) {
    await wifiServices.deleteWifi(id, userId);
     return res.sendStatus(httpStatus.OK);
     }catch(err){
-        if(err.message === "not found"){
-          return res.sendStatus(httpStatus.NOT_FOUND);
-        }
-        if(err.message === "unauthorized"){
-          return res.sendStatus(httpStatus.UNAUTHORIZED);
-        }
 
+      if(err.message === "not found"){
+        return res.sendStatus(httpStatus.NOT_FOUND);
+      }
+      res.sendStatus(err);
     }
 
 }

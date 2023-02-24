@@ -24,12 +24,17 @@ async function getWifis(userId: number){
  
   const newwifis = [];
 
-   wifis.forEach((wifi) => {
-        wifi.password =  cryptr.decrypt(wifi.password);
-     
-        newwifis.push(wifi);
-        
-    });
+  
+
+    for(let wifi of wifis){
+      newwifis.push({
+        title: wifi.title,
+        network: wifi.network,
+        password: cryptr.decrypt(wifi.password),
+        userId: wifi.userId
+
+      });
+    }
     
     
   return newwifis;

@@ -109,10 +109,9 @@ describe(" /credentials", () => {
             expect(response.status).toBe(httpStatus.NOT_FOUND);
 
         });
+   
 
-      
-           
-    
+
 
 
     });
@@ -156,14 +155,7 @@ describe(" /credentials", () => {
             expect(response.status).toBe(httpStatus.NOT_FOUND);
 
         });
-
-     
-
-     
-
-        
-        
-
+   
 
 
     });

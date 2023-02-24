@@ -28,7 +28,7 @@ export async function createCredential(req: Request, res: Response, next: any){
 }
 
 export async function getCredentials(req: Request, res: Response, next: any) {
-  const userId = res.locals.userId;
+  const userId = Number(res.locals.userId);
   try{
    const credentials =  await credentialServices.getCredentials(userId);
   
