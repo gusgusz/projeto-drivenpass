@@ -8,10 +8,9 @@ async function signUp(body: UserInput){
 const {email, password} = body;
 const hashPassword = await bcrypt.hash(password,10);
 const isEmail = await userRepository.getUserByEmail(email);
-
-if (isEmail) {
+if(isEmail){
   throw new Error("conflict");
-  }
+}
  
 
 await userRepository.signUp({email, hashPassword});
@@ -19,8 +18,8 @@ await userRepository.signUp({email, hashPassword});
 async function signIn(body: UserInput){
   const {email, password} = body;
   const isEmail = await userRepository.getUserByEmail(email);
-  if(!isEmail){
-    throw new Error("unauthorized");
+  if(isEmail === null){
+    throw new Error("not found");
   }
   const noHash = await bcrypt.compare(password, isEmail.password); 
 

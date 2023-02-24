@@ -28,26 +28,22 @@ export async function createCredential(req: Request, res: Response, next: any){
 }
 
 export async function getCredentials(req: Request, res: Response, next: any) {
-  
   const userId = res.locals.userId;
-  if(!userId){
-    throw new Error("unauthorized");
-    }
-    console.log(userId);
   try{
    const credentials =  await credentialServices.getCredentials(userId);
   
-    res.status(httpStatus.OK).send(credentials);
+   res.status(httpStatus.OK).send(credentials);
     }catch(err){
         if(err.message === "not found"){
-          return res.sendStatus(httpStatus.NOT_FOUND);
+         res.sendStatus(httpStatus.NOT_FOUND);
         }
 
         if(err.message === "unauthorized"){
-          return res.sendStatus(httpStatus.UNAUTHORIZED);
+          res.sendStatus(httpStatus.UNAUTHORIZED);
         }
+        
 
-        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+        res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
@@ -55,9 +51,7 @@ export async function getCredentials(req: Request, res: Response, next: any) {
 export async function getCredentialById(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
   const userId = Number(res.locals.userId);
-  if(!userId){
-    res.sendStatus(httpStatus.UNAUTHORIZED);
-    }
+ 
   try{
    const credential =  await credentialServices.getCredentialById(id, userId);
     return res.status(httpStatus.OK).json(credential);
@@ -69,7 +63,7 @@ export async function getCredentialById(req: Request, res: Response, next: any) 
           return res.sendStatus(httpStatus.UNAUTHORIZED);
         }
 
-        return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+       
     }
 
 }
@@ -77,9 +71,7 @@ export async function getCredentialById(req: Request, res: Response, next: any) 
 export async function deleteCredential(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
   const userId = Number(res.locals.userId)
-  if(!userId){
-    res.sendStatus(httpStatus.UNAUTHORIZED);
-    }
+ 
   try{
    await credentialServices.deleteCredential(id, userId);
     return res.sendStatus(httpStatus.OK);

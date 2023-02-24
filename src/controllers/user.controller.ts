@@ -41,6 +41,9 @@ export async function signIn(req: Request, res: Response, next: any) {
         if(err.message === "unauthorized"){
           return res.sendStatus(httpStatus.UNAUTHORIZED);
         }
+        if(err.message === "not found"){
+          return res.sendStatus(httpStatus.NOT_FOUND);
+        }
 
         return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }

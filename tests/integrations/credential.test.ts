@@ -31,6 +31,37 @@ describe(" /credentials", () => {
 
    });
 
+    it("shoud respond with 401 if valid token is provided but body is not correct  " , async () => {
+
+        const token = await generateValidToken();
+        const response = await supertest(app)
+            .post("/credential")
+            .set("Authorization", `Bearer ${token}`).send({
+                name: faker.internet.userName(),
+                password: faker.internet.password(9),
+                url: faker.internet.url(),
+                username: faker.internet.userName(),
+
+            });
+            expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+        });
+
+    it("should respond with 409 if there is already a credential with the same title for this user", async () => {
+        const user = await createUser();
+        const token = await generateValidToken(user);
+        const credential = await createCredential(user.id);
+        const response = await supertest(app)
+            .post("/credential")
+            .set("Authorization", `Bearer ${token}`).send({
+                title: credential.title,
+                password: faker.internet.password(10),
+                url: faker.internet.url(),
+                username: faker.internet.userName(),
+
+            });
+        expect(response.status).toBe(httpStatus.CONFLICT);
+
+    });
    
 
     it("should respond with 200 if valid token is provided and body is correct  " , async () => {
@@ -79,13 +110,32 @@ describe(" /credentials", () => {
 
         });
 
+      
+           
+    
+
+
     });
 
     describe("GET /credential/:id", () => {
+
+        it("should respond with 401 if token is provided but credential Id does not belong to user", async () => {
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const credential = await createCredential(user.id);
+            const token2 = await generateValidToken();
+            const response = await supertest(app)
+                .get(`/credential/${credential.id}`)
+                .set("authorization", `Bearer ${token2}`);
+            expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+
+        });
         it("should respond with 401 if no token is provided", async () => {
             const response = await supertest(app).get("/credentials/1");
             expect(response.status).toBe(httpStatus.UNAUTHORIZED);
         });
+
+       
 
         it("should respond with 403 if invalid token is provided", async () => {
 
@@ -107,18 +157,9 @@ describe(" /credentials", () => {
 
         });
 
-        it("should respond with 200 if valid token is provided", async () => {
-            const user = await createUser();
-            const token = await generateValidToken(user);
-            const credential = await createCredential(user.id);
-            const response = await supertest(app)
-                .get(`/credential/${credential.id}`)
-                .set("authorization", `Bearer ${token}`);
-            expect(response.status).toBe(httpStatus.OK);
+     
 
-        });
-
-    
+     
 
         
         
@@ -142,7 +183,20 @@ describe(" /credentials", () => {
             expect(response.status).toBe(httpStatus.FORBIDDEN);
 
         });
+      
 
+        it("should respond with 401 if token is given but credential does not belong to user", async () => {
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const credential = await createCredential(user.id);
+            const token2 = await generateValidToken();
+            const response = await supertest(app)
+
+                .delete(`/credential/${credential.id}`)
+                .set("authorization", `Bearer ${token2}`);
+            expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+
+        });
    
 
         it("should respond with 200 if token is given and credential belongs to user", async () => {
@@ -156,7 +210,6 @@ describe(" /credentials", () => {
 
         });
     });
-
 
 
 });

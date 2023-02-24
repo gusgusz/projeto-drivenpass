@@ -2,9 +2,15 @@ import * as jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
 
 import { createUser } from "./factories/user-factory";
-import prisma from "../src/config/database";
+import prisma from "./database";
 import dotenv from "dotenv";
 dotenv.config();
+
+
+
+
+
+
 
 export async function cleanDb() {
   await prisma.credential.deleteMany({});

@@ -13,7 +13,7 @@ async function createCredential(userId: number ,body: UserInput){
 const isTitle = await credentialRepository.getCredentialByTitle( body.title);
 
 if (isTitle && isTitle.userId === userId) {
-  console.log("aquiii16");
+
   throw new Error("conflict");
   }
   body.password = cryptr.encrypt(body.password);
@@ -31,12 +31,22 @@ async function getCredentials(userId: number){
   }
   const newCredentials = [];
 
-   credentials.forEach(async (credential) => {
-        credential.password =cryptr.decrypt(credential.password);
+   for( let credential of credentials){
         
-        newCredentials.push(credential);
         
-    });
+        newCredentials.push({
+          id: credential.id,
+          title: credential.title,
+          password: cryptr.decrypt(credential.password),
+          url: credential.url,
+          username: credential.username,
+          userId: credential.userId
+
+        });
+        
+    };
+        
+   
     
     
   return newCredentials;
@@ -44,8 +54,10 @@ async function getCredentials(userId: number){
 
 async function getCredentialById(id: number, userId: number){
   const credential = await credentialRepository.getCredentialById(id);
+ 
   if(!credential){
     throw new Error("not found");
+   
   }
   if(credential.userId !== userId){
     throw new Error("unauthorized");
@@ -56,9 +68,7 @@ async function getCredentialById(id: number, userId: number){
 
 async function deleteCredential(id: number, userId: number){
   const credential = await credentialRepository.getCredentialById(id);
-  if(!credential){
-    throw new Error("not found");
-  }
+ 
   if(credential.userId !== userId){
     throw new Error("unauthorized");
     }

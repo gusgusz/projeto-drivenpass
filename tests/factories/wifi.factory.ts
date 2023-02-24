@@ -1,5 +1,5 @@
 import {faker} from "@faker-js/faker";
-import prisma from "../../src/config/database";
+import prisma from "../database";
 import { Network } from "@prisma/client";
 
 export async function createWifi(userId: number){

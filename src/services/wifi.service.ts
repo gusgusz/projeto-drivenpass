@@ -21,10 +21,7 @@ await wifiRepository.createWifi({userId, ...body});
 async function getWifis(userId: number){
   const wifis = await wifiRepository.getWifis(userId);
   
-  if(!wifis){
-    throw new Error("not found");
-
-  }
+ 
   const newwifis = [];
 
    wifis.forEach((wifi) => {

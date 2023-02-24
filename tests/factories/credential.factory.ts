@@ -1,5 +1,5 @@
 import {faker} from "@faker-js/faker";
-import prisma from "../../src/config/database";
+import prisma from "../database";
 
 export async function createCredential(userId: number) {
    const credential = await prisma.credential.create({

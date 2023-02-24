@@ -31,6 +31,9 @@ describe(" /wifi", () => {
 
     });
 
+  
+
+
     it("should respond with 401 if valid token is provided but body is not correct  " , async () => {
 
         const token = await generateValidToken();
@@ -43,7 +46,7 @@ describe(" /wifi", () => {
                 username: faker.internet.userName(),
 
             });
-            console.log(response.status);
+           
 
            
         expect(response.status).toBe(httpStatus.UNAUTHORIZED);
@@ -77,6 +80,8 @@ describe(" /wifi", () => {
             expect(response.status).toBe(httpStatus.UNAUTHORIZED);
         });
 
+     
+
         it("should respond with 403 if invalid token is provided", async () => {
 
             const token = faker.internet.userName();
@@ -86,9 +91,12 @@ describe(" /wifi", () => {
             expect(response.status).toBe(httpStatus.FORBIDDEN);
         });
 
+      
         it("should respond with 200 if valid token is provided and body is correct  " , async () => {
             const user = await createUser();
             const token = await generateValidToken(user);
+           
+          
             const response = await supertest(app)
                 .get("/wifi")
                 .set("authorization", `Bearer ${token}`);
@@ -113,6 +121,21 @@ describe(" /wifi", () => {
                 .set("Authorization", `Bearer ${token}`);
             expect(response.status).toBe(httpStatus.FORBIDDEN);
         });
+
+        it("should respond with 401 if valid token is provided but wifi dont belong to user  " , async () => {
+            const user = await createUser();
+            const user2 = await createUser();
+            const token = await generateValidToken(user);
+            const token2 = await generateValidToken(user2);
+            const wifi = await createWifi(user.id);
+            const response = await supertest(app)
+                .get(`/wifi/${wifi.id}`)
+                .set("authorization", `Bearer ${token2}`);
+                expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+
+        });
+
+
         it("should respond with 404 if valid token is provided but id is not correct  " , async () => {
                 
                 const token = await generateValidToken();

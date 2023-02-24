@@ -46,6 +46,16 @@ describe("POST sign-up", () => {
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
+  it("should respond with 409 when given email is already in use", async () => {
+    const user = await createUser();
+    const response = await supertest(app).post("/sign-up").send({
+      email: user.email,
+      password: faker.internet.password(10),
+    });
+    expect(response.status).toBe(httpStatus.CONFLICT);
+
+  });
+
 
 
 
@@ -85,12 +95,30 @@ describe("POST sign-in", () => {
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
+  it("should respond with 404 when given email is not in use", async () => {
+    const response = await supertest(app).post("/sign-in").send({
+      email: faker.internet.email(),
+      password: faker.internet.password(10),
+    });
+
+    expect(response.status).toBe(httpStatus.NOT_FOUND);
+
+  });
   it("should respond with 401 when given email is not valid", async () => {
     const response = await supertest(app).post("/sign-in").send({
       email: faker.internet.userName(),
       password: faker.internet.password(10),
     });
 
+    expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+  });
+
+  it("should respond with 401 when given password is not valid", async () => {
+    const user = await createUser();
+    const response = await supertest(app).post("/sign-in").send({
+      email: user.email,
+      password: faker.internet.password(10),
+    });
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
  it("it should respond with 200 when given email and password are valid", async () => {
