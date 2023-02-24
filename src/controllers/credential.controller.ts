@@ -54,7 +54,7 @@ export async function getCredentials(req: Request, res: Response, next: any) {
 
 export async function getCredentialById(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
-  const userId = Number(res.locals.us)
+  const userId = Number(res.locals.userId);
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }
@@ -76,7 +76,7 @@ export async function getCredentialById(req: Request, res: Response, next: any) 
 
 export async function deleteCredential(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
-  const userId = Number(res.locals.us)
+  const userId = Number(res.locals.userId)
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }

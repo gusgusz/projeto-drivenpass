@@ -6,11 +6,11 @@ import { cleanDb, generateValidToken } from "../helpers";
 import { createWifi }  from "../factories/wifi.factory";
 import supertest from "supertest";
 
-beforeEach(async () => {
+beforeAll(async () => {
     await cleanDb();
 });
 
-
+let u = {};
 
 describe(" /wifi", () => {
 
@@ -63,6 +63,7 @@ describe(" /wifi", () => {
                 network: faker.internet.url(),
 
             });
+        
            
         expect(response.status).toBe(httpStatus.OK);
    });
@@ -121,6 +122,17 @@ describe(" /wifi", () => {
                 
                 expect(response.status).toBe(httpStatus.NOT_FOUND);
             });
+
+        // it("should respond with 200 if valid token is provided and id is correct  " , async () => {
+        //     const user = await createUser();
+        //     const token = await generateValidToken(user);
+        //     const wifi = await createWifi(user.id);
+        //     const response = await supertest(app)
+        //         .get(`/wifi/${wifi.id}`)
+        //         .set("authorization", `Bearer ${token}`);
+            
+        //     expect(response.status).toBe(httpStatus.O);
+        // });
 
    
         });
