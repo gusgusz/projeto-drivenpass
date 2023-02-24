@@ -72,6 +72,9 @@ export async function deleteWifi(req: Request, res: Response, next: any) {
    await wifiServices.deleteWifi(id, userId);
     return res.sendStatus(httpStatus.OK);
     }catch(err){
+      if(err.message === "unauthorized"){
+        return res.sendStatus(httpStatus.UNAUTHORIZED);
+      }
 
       if(err.message === "not found"){
         return res.sendStatus(httpStatus.NOT_FOUND);

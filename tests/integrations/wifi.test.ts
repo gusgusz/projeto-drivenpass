@@ -181,6 +181,19 @@ describe(" /wifi", () => {
                 expect(response.status).toBe(httpStatus.NOT_FOUND);
         });
 
+
+        it("should respond with 401 if valid token is provided but wifi dont belong to user  " , async () => {
+            const user = await createUser();
+            const user2 = await createUser();
+            const token = await generateValidToken(user);
+            const token2 = await generateValidToken(user2);
+            const wifi = await createWifi(user.id);
+            const response = await supertest(app)
+                .delete(`/wifi/${wifi.id}`)
+                .set("authorization", `Bearer ${token2}`);
+                expect(response.status).toBe(httpStatus.UNAUTHORIZED);
+
+        });
         it("should respond with 200 if valid token is provided and id is correct  " , async () => {
 
             const user = await createUser();
