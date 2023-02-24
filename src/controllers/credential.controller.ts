@@ -38,9 +38,7 @@ export async function getCredentials(req: Request, res: Response, next: any) {
          res.sendStatus(httpStatus.NOT_FOUND);
         }
 
-        if(err.message === "unauthorized"){
-          res.sendStatus(httpStatus.UNAUTHORIZED);
-        }
+     
         
 
         res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
