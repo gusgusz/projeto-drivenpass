@@ -7,7 +7,7 @@ import httpStatus from "http-status";
 
 export async function createWifi(req: Request, res: Response, next: any){
     const body = req.body;
-    const userId = Number(req.body.userId);
+    const userId = Number(res.locals.userId);
     const validate = wifiSchemma.validate(body);
 
     if(validate.error){
@@ -28,7 +28,7 @@ export async function createWifi(req: Request, res: Response, next: any){
 }
 
 export async function getWifis(req: Request, res: Response, next: any) {
-  const userId = Number(req.body.userId);
+  const userId = Number(res.locals.userId);
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }
@@ -47,7 +47,7 @@ export async function getWifis(req: Request, res: Response, next: any) {
 
 export async function getWifiById(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
-  const userId = Number(req.body.userId);
+  const userId = Number(res.locals.userId);
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }
@@ -69,7 +69,7 @@ export async function getWifiById(req: Request, res: Response, next: any) {
 
 export async function deleteWifi(req: Request, res: Response, next: any) {
   const id = Number(req.params.id);
-  const userId = Number(req.body.userId);
+  const userId = Number(res.locals.userId);
   if(!userId){
     res.sendStatus(httpStatus.UNAUTHORIZED);
     }

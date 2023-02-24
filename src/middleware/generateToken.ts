@@ -19,16 +19,18 @@ export async function authenticateToken(req: Request, res: Response, next: any) 
   }
   
 
-  if (token == null) return res.sendStatus(401)
+  if (token == null) throw new Error("unauthorized");
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err: any, user: any) => {
-    console.log(err)
+   
 
     if (err) return res.sendStatus(403)
     const userr = await userRepository.getUserByEmail(user.email);
+    if(!userr){
+     throw new Error("unauthorized");
+    }
 
-
-    req.body.userId = userr.id
+    res.locals.userId = userr?.id
 
     next()
   })

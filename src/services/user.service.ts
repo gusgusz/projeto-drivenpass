@@ -19,10 +19,13 @@ await userRepository.signUp({email, hashPassword});
 async function signIn(body: UserInput){
   const {email, password} = body;
   const isEmail = await userRepository.getUserByEmail(email);
+  if(!isEmail){
+    throw new Error("unauthorized");
+  }
   const noHash = await bcrypt.compare(password, isEmail.password); 
 
   
-  if (!isEmail || !noHash) {
+  if (!noHash) {
     throw new Error("unauthorized");
     }
    

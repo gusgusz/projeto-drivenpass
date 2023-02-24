@@ -27,9 +27,9 @@ async function getWifis(userId: number){
   }
   const newwifis = [];
 
-   wifis.forEach(async (wifi) => {
-        wifi.password =cryptr.decrypt(wifi.password);
-        console.log(wifi.password)
+   wifis.forEach((wifi) => {
+        wifi.password =  cryptr.decrypt(wifi.password);
+     
         newwifis.push(wifi);
         
     });

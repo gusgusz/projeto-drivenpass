@@ -13,6 +13,7 @@ async function createCredential(userId: number ,body: UserInput){
 const isTitle = await credentialRepository.getCredentialByTitle( body.title);
 
 if (isTitle && isTitle.userId === userId) {
+  console.log("aquiii16");
   throw new Error("conflict");
   }
   body.password = cryptr.encrypt(body.password);
@@ -24,7 +25,7 @@ await credentialRepository.createCredential({userId, ...body});
 async function getCredentials(userId: number){
   const credentials = await credentialRepository.getCredentials(userId);
   
-  if(!credentials){
+  if(!credentials || credentials.length === 0){
     throw new Error("not found");
 
   }
@@ -32,7 +33,7 @@ async function getCredentials(userId: number){
 
    credentials.forEach(async (credential) => {
         credential.password =cryptr.decrypt(credential.password);
-        console.log(credential.password)
+        
         newCredentials.push(credential);
         
     });

@@ -31,7 +31,7 @@ export async function signIn(req: Request, res: Response, next: any) {
   const validate = userSchemma.validate(body);
 
   if(validate.error){
-    res.status(401).send(validate.error.details[0].message);
+    return res.status(401).send(validate.error.details[0].message);
   }
 
   try{

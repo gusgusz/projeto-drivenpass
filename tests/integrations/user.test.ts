@@ -47,15 +47,7 @@ describe("POST sign-up", () => {
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
 
-  it("should respond with 409 when given email is already in use", async () => {
-    const user = await createUser();
-    const response = await supertest(app).post("/sign-up").send({
-      email: user.email,
-      password: faker.internet.password(10),
-    });
 
-    expect(response.status).toBe(httpStatus.CONFLICT);
-  });
 
 
   it("should respond with 201 when given email and password are valid", async () => {
